@@ -1,0 +1,15 @@
+services:
+  pocketbase:
+    container_name: pocketbase
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - pocketbase-data:/pb/pb_data
+      - ./pocketbase/pb_hooks:/pb/pb_hooks
+      - ./pocketbase/pb_migrations:/pb/pb_migrations
+
+volumes:
+  pocketbase-data:
