@@ -4,6 +4,13 @@
 	import Sidebar from './Sidebar.svelte';
 	import CookieConsent from '$lib/components/cookieConsent/CookieConsent.svelte';
 	import ToastProvider from '$lib/components/toast/ToastProvider.svelte';
+	import { onMount } from 'svelte';
+	import { pb } from '$lib/pocketbase/pb';
+
+	onMount(async () => {
+		const list = await pb.collection('ideas').getFullList();
+		console.log(list);
+	});
 </script>
 
 <Topbar />

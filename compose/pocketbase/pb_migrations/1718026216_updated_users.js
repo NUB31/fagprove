@@ -3,17 +3,17 @@ migrate((db) => {
   const dao = new Dao(db)
   const collection = dao.findCollectionByNameOrId("_pb_users_auth_")
 
-  // add
+  // update
   collection.schema.addField(new SchemaField({
     "system": false,
-    "id": "lyci92aw",
-    "name": "field",
+    "id": "9czv1zbs",
+    "name": "permissions",
     "type": "relation",
     "required": false,
     "presentable": false,
     "unique": false,
     "options": {
-      "collectionId": "suirsxjvy9clrq7",
+      "collectionId": "ftjd9swtdl6f3nk",
       "cascadeDelete": false,
       "minSelect": null,
       "maxSelect": null,
@@ -26,8 +26,23 @@ migrate((db) => {
   const dao = new Dao(db)
   const collection = dao.findCollectionByNameOrId("_pb_users_auth_")
 
-  // remove
-  collection.schema.removeField("lyci92aw")
+  // update
+  collection.schema.addField(new SchemaField({
+    "system": false,
+    "id": "9czv1zbs",
+    "name": "permissions",
+    "type": "relation",
+    "required": true,
+    "presentable": false,
+    "unique": false,
+    "options": {
+      "collectionId": "ftjd9swtdl6f3nk",
+      "cascadeDelete": false,
+      "minSelect": null,
+      "maxSelect": null,
+      "displayFields": null
+    }
+  }))
 
   return dao.saveCollection(collection)
 })
