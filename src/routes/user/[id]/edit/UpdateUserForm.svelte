@@ -47,15 +47,6 @@
 		onConfirm={async (v) => await pb.collection('users').update(user.id, { name: v })}
 	/>
 
-	<Input
-		value={user.email}
-		label="Email"
-		type="email"
-		placeholder="Email"
-		autocomplete="email"
-		onConfirm={async (v) => await pb.collection('users').update(user.id, { email: v })}
-	/>
-
 	<div class="form-group">
 		<label for="profile-picture"> Profile picture </label>
 		<input id="profile-picture" type="file" multiple={false} bind:files />
