@@ -6,18 +6,16 @@ migrate((db) => {
   // add
   collection.schema.addField(new SchemaField({
     "system": false,
-    "id": "9czv1zbs",
-    "name": "permissions",
-    "type": "relation",
-    "required": true,
+    "id": "elctyz0e",
+    "name": "access_level",
+    "type": "number",
+    "required": false,
     "presentable": false,
     "unique": false,
     "options": {
-      "collectionId": "ftjd9swtdl6f3nk",
-      "cascadeDelete": false,
-      "minSelect": null,
-      "maxSelect": null,
-      "displayFields": null
+      "min": null,
+      "max": null,
+      "noDecimal": false
     }
   }))
 
@@ -27,7 +25,7 @@ migrate((db) => {
   const collection = dao.findCollectionByNameOrId("_pb_users_auth_")
 
   // remove
-  collection.schema.removeField("9czv1zbs")
+  collection.schema.removeField("elctyz0e")
 
   return dao.saveCollection(collection)
 })

@@ -1,8 +1,27 @@
 <script>
 	import DynamicPage from '$lib/components/dynamicPage/DynamicPage.svelte';
+	import { pb, unboxError } from '$lib/pocketbase/pb';
+	import CreateIdeaForm from './CreateIdeaForn.svelte';
 </script>
 
-<DynamicPage>
-	<h1>Welcome to SvelteKit</h1>
-	<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
-</DynamicPage>
+{#await pb.collection('ideas').getFullList()}
+	<DynamicPage title="Loading..." />
+{:then ideas}
+	<DynamicPage title="Ideas">
+		<ul>
+			{#each ideas as idea}
+				<li>
+					{idea.title}
+				</li>
+			{/each}
+		</ul>
+
+		<svelte:fragment slot="sidebar">
+			<CreateIdeaForm />
+		</svelte:fragment>
+	</DynamicPage>
+{:catch e}
+	<DynamicPage title="Error">
+		{unboxError(e).message}
+	</DynamicPage>
+{/await}

@@ -1,37 +1,14 @@
 import PocketBase, { ClientResponseError } from 'pocketbase';
-import type {
-	PermissionsResponse,
-	TypedPocketBase,
-	UsersResponse
-} from './generated/pocketbase-types';
+import type { TypedPocketBase, UsersResponse } from './generated/pocketbase-types';
 import { env } from '$env/dynamic/public';
 import { writable } from 'svelte/store';
-
-type ExpandPermissions = {
-	permission: PermissionsResponse[];
-};
 
 export const pb = new PocketBase(env.PUBLIC_PB_URL) as TypedPocketBase;
 
 export const user = writable(pb.authStore.model as UsersResponse | null);
 
-async function refreshRoles(authModel: UsersResponse) {
-	const uwp = await pb
-		.collection('users')
-		.getOne<UsersResponse<ExpandPermissions>>(authModel.model.id, {
-			expand: 'permissions'
-		});
-
-	if (uwp.expand) {
-		const permissions = uwp.expand.permission;
-		console.log(permissions);
-	}
-}
-
 pb.authStore.onChange(async (_, authModel) => {
-	console.log('Auth state changed');
 	user.set(authModel as UsersResponse);
-	await refreshRoles(authModel);
 });
 
 export function unboxError(e: unknown): {
