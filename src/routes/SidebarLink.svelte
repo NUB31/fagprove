@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ButtonLink from '$lib/components/link/ButtonLink.svelte';
 
-	/** Icon imported through ~icons/* **/
+	/** @description Icon imported through ~icons/* **/
 	export let icon;
 	export let title: string;
 	export let expanded: boolean;

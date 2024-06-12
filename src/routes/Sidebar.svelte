@@ -5,6 +5,7 @@
 	import ArrowRight from '~icons/ic/round-arrow-right';
 	import SidebarLink from './SidebarLink.svelte';
 	import Home from '~icons/ic/round-home';
+	import Idea from '~icons/ic/round-spoke';
 
 	let sidebarOpen = browser ? document.body.clientWidth > 850 : true;
 </script>
@@ -25,9 +26,12 @@
 			<li>
 				<SidebarLink title="Home" expanded={sidebarOpen} href={Routes.home} icon={Home} />
 			</li>
+			<li>
+				<SidebarLink title="Ideas" expanded={sidebarOpen} href={Routes.ideas} icon={Idea} />
+			</li>
 		</ul>
 	</nav>
-	<div class="">
+	<div>
 		<button
 			class="cursor-pointer rounded-full border-none bg-transparent p-2 transition-colors hover:bg-light-200"
 			on:click={() => (sidebarOpen = !sidebarOpen)}

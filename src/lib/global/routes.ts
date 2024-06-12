@@ -4,4 +4,6 @@ export class Routes {
 	static authenticate = '/authenticate';
 	static user = (id: string) => `/user/${id}`;
 	static user_edit = (id: string) => `${Routes.user(id)}/edit`;
+	static ideas = '/ideas';
+	static idea = (id: string) => `${Routes.ideas}/${id}`;
 }

@@ -4,6 +4,8 @@
 	import { toast } from '$lib/components/toast/toast';
 	import { pb, unboxError, user } from '$lib/pocketbase/pb';
 
+	export let onSuccess: () => void = () => {};
+
 	let title: string;
 	let description: string;
 	let loading = false;
@@ -22,6 +24,7 @@
 				created_by: $user.id
 			});
 			toast.success();
+			onSuccess();
 		} catch (e) {
 			toast.error(unboxError(e).message);
 		} finally {
