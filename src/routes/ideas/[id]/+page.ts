@@ -11,10 +11,12 @@ type ExpandedIdea = IdeasResponse<{
 	status: StatusResponse;
 	category: CategoryResponse | null;
 	created_by: UsersResponse;
-	comments_via_idea: CommentsResponse<{
-		created_by: UsersResponse;
-		responding_to: CommentsResponse;
-	}>[];
+	comments_via_idea:
+		| CommentsResponse<{
+				created_by: UsersResponse;
+				responding_to: CommentsResponse;
+		  }>[]
+		| undefined;
 }>;
 
 export async function load({ params }) {

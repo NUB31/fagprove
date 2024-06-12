@@ -9,12 +9,17 @@
 	import Send from '~icons/ic/round-send';
 	import type { CommentsResponse, UsersResponse } from '$lib/pocketbase/generated/pocketbase-types';
 	import MessageBubble from './MessageBubble.svelte';
+	import { onDestroy, onMount } from 'svelte';
+	import { page } from '$app/stores';
+	import { invalidate, invalidateAll } from '$app/navigation';
+	import { Routes } from '$lib/global/routes';
 
 	export let data: PageData;
 
 	let loading = false;
 	let comment: string;
 	let respondingTo: CommentsResponse | null = null;
+	let subscriptions: (() => Promise<void>)[] = [];
 
 	async function addComment() {
 		loading = true;
@@ -31,6 +36,7 @@
 				responding_to: respondingTo?.id
 			});
 
+			comment = '';
 			toast.success();
 		} catch (e) {
 			toast.error(unboxError(e).message);
@@ -47,6 +53,21 @@
 	) {
 		return [...data].sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
 	}
+
+	onMount(async () => {
+		subscriptions.push(await pb.collection('ideas').subscribe($page.params.id, invalidateAll));
+		subscriptions.push(
+			await pb.collection('comments').subscribe('*', (sub) => {
+				if (sub.record.idea == $page.params.id) {
+					invalidateAll();
+				}
+			})
+		);
+	});
+
+	onDestroy(async () => {
+		subscriptions.forEach(async (x) => await x());
+	});
 </script>
 
 <DynamicPage title={data.idea.title}>
@@ -81,7 +102,7 @@
 	</div>
 
 	<ul class="flex flex-col gap-2 mt-8">
-		{#if data.idea.expand}
+		{#if data.idea.expand?.comments_via_idea}
 			{#each sortDesc(data.idea.expand.comments_via_idea) as comment}
 				<li class="flex flex-col">
 					<MessageBubble
@@ -93,7 +114,7 @@
 				</li>
 			{/each}
 		{:else}
-			<div>Something went wrong</div>
+			<div>Nothing here yet...</div>
 		{/if}
 	</ul>
 
