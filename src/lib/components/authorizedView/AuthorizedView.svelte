@@ -2,7 +2,7 @@
 	import type { UsersResponse } from '$lib/pocketbase/generated/pocketbase-types';
 	import { user } from '$lib/pocketbase/pb';
 
-	export let authDelegate: () => boolean = () => true;
+	export let authDelegate: (user: UsersResponse) => boolean = (_) => true;
 
 	let nonNullUser: UsersResponse;
 
@@ -11,7 +11,7 @@
 	});
 </script>
 
-{#if authDelegate() && $user != null}
+{#if $user != null && authDelegate($user)}
 	<slot name="authorized" user={nonNullUser} />
 {:else}
 	<slot name="unauthorized" />

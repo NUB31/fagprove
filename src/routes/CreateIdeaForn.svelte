@@ -21,6 +21,7 @@
 				description: description,
 				created_by: $user.id
 			});
+			toast.success();
 		} catch (e) {
 			toast.error(unboxError(e).message);
 		} finally {
@@ -29,7 +30,7 @@
 	}
 </script>
 
-<form>
+<form on:submit|preventDefault={createIdea}>
 	<caption>Create idea</caption>
 	<hr />
 	<Input
@@ -48,5 +49,5 @@
 		placeholder="Description"
 		type="text"
 	/>
-	<Button {loading} class="w-full" on:click={createIdea}>Create idea</Button>
+	<Button {loading} class="w-full">Create idea</Button>
 </form>
