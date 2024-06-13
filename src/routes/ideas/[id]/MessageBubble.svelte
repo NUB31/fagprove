@@ -10,25 +10,27 @@
 	export let comment: ExpandedComment;
 	export let onRespondClick: (comment: CommentsResponse) => void;
 
-	function sentByMe(): boolean {
-		return $user != null && $user.id == comment.expand?.created_by?.id;
+	let sentByMe = false;
+
+	$: {
+		sentByMe = $user != null && $user.id == comment.expand?.created_by?.id;
 	}
 </script>
 
-<div class:group={true} class={sentByMe() ? 'self-end' : 'self-start'}>
+<div class:group={true} class={sentByMe ? 'self-end' : 'self-start'}>
 	<div
 		class={`relative flex flex-col gap-1 border-2 rounded-md py-2 px-4 min-w-32 ${
-			sentByMe()
+			sentByMe
 				? 'rounded-br-none bg-accent-400 border-accent-700 text-white'
 				: 'rounded-bl-none bg-light-200 border-light-300'
 		}`}
 	>
 		{#if comment.expand?.responding_to}
 			<div class="opacity-70 flex items-center gap-2">
-				<Respond class={sentByMe() ? 'text-white' : 'text-dark-50'} />
+				<Respond class={sentByMe ? 'text-white' : 'text-dark-50'} />
 				<div
-					class:text-white={sentByMe()}
-					class:text-dark-50={!sentByMe()}
+					class:text-white={sentByMe}
+					class:text-dark-50={!sentByMe}
 					class="line-clamp-1 max-w-96"
 				>
 					{@html comment.expand.responding_to.body}
@@ -52,8 +54,8 @@
 
 		<div
 			class="absolute hidden bottom-0 translate-y-[110%] group-hover:flex p-2 bg-dark-200 border-dark-400 rounded-md gap-2 z-10"
-			class:left-0={!sentByMe()}
-			class:right-0={sentByMe()}
+			class:left-0={!sentByMe}
+			class:right-0={sentByMe}
 		>
 			<Button
 				class="p-0 bg-transparent border-none hover:bg-transparent ml-auto text-light-50"
