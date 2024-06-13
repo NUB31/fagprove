@@ -12,6 +12,7 @@
 	import IdeasFilter from './IdeasFilter.svelte';
 	import Descending from '~icons/ic/round-keyboard-arrow-down';
 	import Ascending from '~icons/ic/round-keyboard-arrow-up';
+	import { onDestroy, onMount } from 'svelte';
 
 	let showCreateIdeaModal: () => void;
 	let closeCreateIdeaModal: () => void;
@@ -22,26 +23,59 @@
 	let sort: 'votes' | 'created' = 'votes';
 	let ascending = false;
 
-	const getIdeas = debounce(async (filter: string, orderBy: string, asc: boolean) => {
-		loading = true;
+	const getIdeas = debounce(
+		async (filter: string, orderBy: string, asc: boolean, silent: boolean = false) => {
+			if (!silent) loading = true;
 
-		try {
-			ideas = await pb.collection('ideas').getFullList<ExpandedIdea>({
-				filter: filter,
-				expand: 'status,created_by',
-				sort: `${asc ? '' : '-'}${orderBy}`
-			});
-		} catch (e) {
-			toast.error(unboxError(e).message);
-		} finally {
-			loading = false;
-		}
-	}, 200);
+			try {
+				ideas = await pb.collection('ideas').getFullList<ExpandedIdea>({
+					filter: filter,
+					expand: 'status,created_by',
+					sort: `${asc ? '' : '-'}${orderBy}`
+				});
+			} catch (e) {
+				toast.error(unboxError(e).message);
+			} finally {
+				loading = false;
+			}
+		},
+		200
+	);
 
 	// Block runs each time filter changes
 	$: {
 		getIdeas(filter, sort, ascending);
 	}
+
+	const subscriptions: (() => void)[] = [];
+
+	onMount(async () => {
+		subscriptions.push(
+			await pb.collection('ideas').subscribe('*', async (sub) => {
+				const index = ideas.findIndex((x) => x.id == sub.record.id);
+
+				switch (sub.action) {
+					case 'update':
+						if (index != -1) {
+							ideas[index] = { ...ideas[index], ...sub.record } as ExpandedIdea;
+						}
+						break;
+					case 'delete':
+						if (index != -1) {
+							ideas = ideas.filter((x) => x.id != sub.record.id);
+						}
+						break;
+					default:
+						await getIdeas(filter, sort, ascending, true);
+						break;
+				}
+			})
+		);
+	});
+
+	onDestroy(() => {
+		subscriptions.forEach((unsubscribe) => unsubscribe());
+	});
 </script>
 
 <Modal bind:show={showCreateIdeaModal} bind:close={closeCreateIdeaModal}>
