@@ -4,16 +4,14 @@
 	import Copy from '~icons/ic/round-content-copy';
 	import Button from '$lib/components/button/Button.svelte';
 	import { user } from '$lib/pocketbase/pb';
-	import type { CommentsResponse, UsersResponse } from '$lib/pocketbase/generated/pocketbase-types';
+	import type { CommentsResponse } from '$lib/pocketbase/generated/pocketbase-types';
+	import type { ExpandedComment } from './types';
 
-	export let comment: CommentsResponse<{
-		created_by: UsersResponse;
-		responding_to: CommentsResponse;
-	}>;
+	export let comment: ExpandedComment;
 	export let onRespondClick: (comment: CommentsResponse) => void;
 
 	function sentByMe(): boolean {
-		return $user != null && $user.id == comment.expand?.created_by.id;
+		return $user != null && $user.id == comment.expand?.created_by?.id;
 	}
 </script>
 
@@ -38,13 +36,15 @@
 			</div>
 		{/if}
 
-		<div class="flex gap-2">
-			<ProfilePicture
-				class="w-6 h-6 p-0 border-2 border-light-700"
-				user={comment.expand?.created_by}
-			/>
-			<span class="font-medium">{comment.expand?.created_by.username}</span>
-		</div>
+		{#if comment.expand?.created_by}
+			<div class="flex gap-2">
+				<ProfilePicture
+					class="w-7 h-7 p-0 border-2 border-light-700"
+					user={comment.expand.created_by}
+				/>
+				<span class="font-medium">{comment.expand.created_by.username}</span>
+			</div>
+		{/if}
 
 		<div>
 			{@html comment.body}
