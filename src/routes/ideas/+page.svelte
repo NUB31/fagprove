@@ -58,6 +58,7 @@
 					case 'update':
 						if (index != -1) {
 							ideas[index] = { ...ideas[index], ...sub.record } as ExpandedIdea;
+							ideas = ideas;
 						}
 						break;
 					case 'delete':

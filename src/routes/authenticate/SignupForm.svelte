@@ -28,7 +28,6 @@
 			await goto(Routes.home);
 			toast.success();
 		} catch (e) {
-			console.error(e);
 			toast.error(unboxError(e).message);
 		} finally {
 			loading = false;
