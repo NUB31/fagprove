@@ -6,6 +6,8 @@
 	import Sidebar from './Sidebar.svelte';
 	import type { ExpandedIdea } from './types';
 	import { page } from '$app/stores';
+	import Button from '$lib/components/button/Button.svelte';
+	import { vote } from '$lib/util/vote';
 
 	async function loadIdea(): Promise<ExpandedIdea> {
 		return await pb.collection('ideas').getOne<ExpandedIdea>($page.params.id, {
@@ -18,6 +20,10 @@
 	Loading...
 {:then idea}
 	<DynamicPage title={idea.title}>
+		<svelte:fragment slot="header">
+			<Button class="py-1" on:click={async () => await vote(idea.id)}>Add your vote</Button>
+		</svelte:fragment>
+
 		<Card>
 			<svelte:fragment slot="header">Description</svelte:fragment>
 			{@html idea.description}

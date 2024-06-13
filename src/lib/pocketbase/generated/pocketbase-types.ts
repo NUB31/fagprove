@@ -45,6 +45,7 @@ export type CategoryRecord = {
 export type CommentsRecord = {
 	attachments?: string[]
 	body: HTMLString
+	created_by: RecordIdString
 	idea: RecordIdString
 	responding_to?: RecordIdString
 }
@@ -56,6 +57,7 @@ export type IdeasRecord = {
 	description?: HTMLString
 	status: RecordIdString
 	title?: string
+	votes: number
 }
 
 export type StatusRecord = {
