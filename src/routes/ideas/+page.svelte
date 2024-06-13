@@ -52,7 +52,7 @@
 <DynamicPage title="Ideas">
 	<svelte:fragment slot="header">
 		<Button
-			class="bg-accent-400 hover:bg-accent-600 py-1 border-accent-800"
+			class="bg-accent-400 hover:bg-accent-600 py-1 border-accent-800 text-white"
 			on:click={showCreateIdeaModal}>New idea</Button
 		>
 	</svelte:fragment>
@@ -83,28 +83,29 @@
 	{:else}
 		<div class="flex flex-wrap gap-4">
 			{#each ideas as idea}
-				<Card class="w-full lg:w-64">
-					<svelte:fragment slot="header">
-						<div class="flex items-center justify-between gap-2 flex-wrap">
-							{idea.title}
-							{#if idea.expand?.status}
-								<div
-									class="text-sm px-2 text-black rounded-md border-2 bg-green-500 border-green-700"
-								>
-									{idea.expand.status.name}
-								</div>
-							{/if}
-						</div>
-					</svelte:fragment>
+				<a href={Routes.idea(idea.id)}>
+					<Card class="w-full lg:w-64 h-full hover:bg-light-100 transition-colors">
+						<svelte:fragment slot="header">
+							<div class="flex items-center justify-between gap-2 flex-wrap">
+								{idea.title}
+								{#if idea.expand?.status}
+									<div
+										class="text-sm px-2 text-black rounded-md border-2 bg-green-500 border-green-700"
+									>
+										{idea.expand.status.name}
+									</div>
+								{/if}
+							</div>
+						</svelte:fragment>
 
-					<div class="flex flex-col h-full justify-between">
+						<div class="text-light-500">
+							{new Date(idea.created).toDateString()}
+						</div>
 						<div class="line-clamp-2 lg:line-clamp-3">
 							{@html idea.description}
 						</div>
-
-						<ButtonLink href={Routes.idea(idea.id)} class="mt-4 ml-auto">Read more</ButtonLink>
-					</div>
-				</Card>
+					</Card>
+				</a>
 			{/each}
 		</div>
 	{/if}

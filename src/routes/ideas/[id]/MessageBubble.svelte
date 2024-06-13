@@ -29,7 +29,7 @@
 				<div
 					class:text-white={sentByMe()}
 					class:text-dark-50={!sentByMe()}
-					class="truncate max-w-96"
+					class="line-clamp-1 max-w-96"
 				>
 					{@html comment.expand.responding_to.body}
 				</div>
