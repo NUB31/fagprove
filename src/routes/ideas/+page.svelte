@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Button from '$lib/components/button/Button.svelte';
-	import ButtonLink from '$lib/components/link/ButtonLink.svelte';
 	import Card from '$lib/components/card/Card.svelte';
 	import DynamicPage from '$lib/components/dynamicPage/DynamicPage.svelte';
 	import Modal from '$lib/components/modal/Modal.svelte';
@@ -29,7 +28,7 @@
 		try {
 			ideas = await pb.collection('ideas').getFullList<ExpandedIdea>({
 				filter: filter,
-				expand: 'status',
+				expand: 'status,created_by',
 				sort: `${asc ? '' : '-'}${orderBy}`
 			});
 		} catch (e) {
@@ -84,15 +83,29 @@
 		<div class="flex flex-wrap gap-4">
 			{#each ideas as idea}
 				<a href={Routes.idea(idea.id)}>
-					<Card class="w-full lg:w-64 h-full hover:bg-light-100 transition-colors">
+					<Card
+						title={idea.title}
+						class="w-full lg:w-64 h-full hover:bg-light-100 transition-colors"
+					>
 						<svelte:fragment slot="header">
-							<div class="flex items-center justify-between gap-2 flex-wrap">
-								{idea.title}
+							<div class="flex items-center gap-2 flex-wrap">
+								<div
+									class="text-sm px-2 text-black rounded-md border-2 bg-yellow-500 border-yellow-700"
+								>
+									{idea.votes} votes
+								</div>
+								{#if idea.expand?.created_by}
+									<div
+										class="text-sm px-2 text-black rounded-md border-2 bg-blue-500 border-blue-700"
+									>
+										By {idea.expand.created_by.username}
+									</div>
+								{/if}
 								{#if idea.expand?.status}
 									<div
 										class="text-sm px-2 text-black rounded-md border-2 bg-green-500 border-green-700"
 									>
-										{idea.expand.status.name}
+										Status: {idea.expand.status.name}
 									</div>
 								{/if}
 							</div>

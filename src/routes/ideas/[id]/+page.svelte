@@ -24,8 +24,7 @@
 			<Button class="py-1" on:click={async () => await vote(idea.id)}>Add your vote</Button>
 		</svelte:fragment>
 
-		<Card>
-			<svelte:fragment slot="header">Description</svelte:fragment>
+		<Card title="Description">
 			{@html idea.description}
 		</Card>
 

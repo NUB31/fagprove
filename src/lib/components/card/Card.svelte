@@ -1,5 +1,7 @@
-<script>
+<script lang="ts">
 	import { twMerge } from 'tailwind-merge';
+
+	export let title: string | null = null;
 </script>
 
 <div
@@ -10,11 +12,17 @@
 	)}
 >
 	{#if $$slots['header']}
-		<h3 class="text-xl font-semibold">
-			<slot name="header" />
-		</h3>
+		<slot name="header" />
+	{/if}
+
+	{#if title}
+		<h3 class="text-xl font-semibold">{title}</h3>
+	{/if}
+
+	{#if title || $$slots['header']}
 		<hr class="border-light-200" />
 	{/if}
+
 	<div class="grow">
 		<slot />
 	</div>
