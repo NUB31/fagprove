@@ -28,7 +28,6 @@
 						break;
 					case 'update':
 						data.idea = { ...data.idea, ...sub.record } as ExpandedIdea;
-						toast.info('An edit was made to the idea, the content has been updated');
 						break;
 					default:
 						invalidateAll();
@@ -43,7 +42,7 @@
 	});
 </script>
 
-<DynamicPage title={data.idea.title}>
+<DynamicPage title={`${data.idea.votes} votes - ${data.idea.title}`}>
 	<svelte:fragment slot="header">
 		<Button class="py-1" on:click={async () => await vote(data.idea.id)}>Add your vote</Button>
 	</svelte:fragment>
