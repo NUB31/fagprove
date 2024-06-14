@@ -1,0 +1,132 @@
+{
+	"users": [
+		{
+			"id": "yqoeqiutsjmztiy",
+			"username": "oliste",
+			"email": "oliver@exmaple.com",
+			"password": "supersecretpassword",
+			"passwordConfirm": "supersecretpassword",
+			"name": "Oliver Leander Hansen Stene",
+			"access_level": 0
+		},
+		{
+			"id": "qzgwitapcnivwpk",
+			"username": "aksedv",
+			"email": "aksel@exmaple.com",
+			"password": "supersecretpassword",
+			"passwordConfirm": "supersecretpassword",
+			"name": "Aksel Edvardsen",
+			"access_level": 0
+		},
+		{
+			"id": "tgcuelbctxwjeil",
+			"username": "silbea",
+			"email": "silja@exmaple.com",
+			"password": "supersecretpassword",
+			"passwordConfirm": "supersecretpassword",
+			"name": "Silja Beate Heggen",
+			"access_level": 0
+		},
+		{
+			"id": "ataezkymvowiqgs",
+			"username": "krieng",
+			"email": "kristian@exmaple.com",
+			"password": "supersecretpassword",
+			"passwordConfirm": "supersecretpassword",
+			"name": "Kristian Enge",
+			"access_level": 0
+		},
+		{
+			"id": "jcrjfmgsykzryxo",
+			"username": "arssko",
+			"email": "arseni@exmaple.com",
+			"password": "supersecretpassword",
+			"passwordConfirm": "supersecretpassword",
+			"name": "Arseni Skobelev",
+			"access_level": 0
+		},
+		{
+			"id": "jcrjfmgsykzryxo",
+			"username": "hegott",
+			"email": "hege@exmaple.com",
+			"password": "supersecretpassword",
+			"passwordConfirm": "supersecretpassword",
+			"name": "Hege Ottersen",
+			"access_level": 0
+		}
+	],
+	"statuses": [
+		{
+			"id": "eenffnejigdtvbk",
+			"name": "Under review"
+		},
+		{
+			"id": "bwcgbdfnkcoqdon",
+			"name": "Started"
+		},
+		{
+			"id": "ujmzhvwozzqpykj",
+			"name": "On hold"
+		},
+		{
+			"id": "pikuzdjmcguowuw",
+			"name": "Done"
+		}
+	],
+	"categories": [
+		{
+			"id": "kugvzqpzvzgvbox",
+			"name": "Tools",
+			"owner": "qzgwitapcnivwpk"
+		},
+		{
+			"id": "ivjxfwtxezmeswq",
+			"name": "Internal processes",
+			"owner": "qzgwitapcnivwpk"
+		},
+		{
+			"id": "anrblmxfxiqtepl",
+			"name": "Social",
+			"owner": "qzgwitapcnivwpk"
+		},
+		{
+			"id": "owasecyckchbtpj",
+			"name": "Customer events",
+			"owner": "qzgwitapcnivwpk"
+		}
+	],
+	"ideas": [
+		{
+			"id": "tjwoqdrinxscfuu",
+			"title": "Fagkveld om KI",
+			"body": "Kundene våre etterspør kunnskap om KI og vil så gjerne at vi skal vise litt vei for dem. Hva om vi lager et opplegg på Arena 17 vi kan presentere for våre kunder? Litt ekspertise av oss, litt innleide foredragsholdere, og at kundene våre kommer og sier noe om sine behov fra kommunenes ståsted. Åh det hade vært så kult!!!!!",
+			"votes": 30,
+			"category": "owasecyckchbtpj",
+			"status": "pikuzdjmcguowuw"
+		},
+		{
+			"id": "ujgkxpuzwgautvf",
+			"title": "Test-verktøy",
+			"body": "Som testleder ønsker jeg meg en måte å kunne 'etterligne' andre personer sine roller, for at vi mer effektivt skal kunne teste på vegne av noen. Jeg vet ikke helt hvordan dette er mulig, men er det kanskje noen som har noen ideer?",
+			"votes": 30,
+			"category": "ivjxfwtxezmeswq",
+			"status": "bwcgbdfnkcoqdon"
+		},
+		{
+			"id": "idzeaqonqeaheae",
+			"title": "Ikomm-Cruise med faglig innhold!",
+			"body": "Vi sitter en gjeng her nå på firmafest og har fått en veldig god ide. Hva om vi leier et helt cruiseskip i Karribien og fyller det opp med faglige aktiviteter, hackatons, foredrag, workshops, team building-aktiviteter og sosiale greier? Det trenger vi!!",
+			"votes": 40,
+			"category": "anrblmxfxiqtepl",
+			"status": "ujmzhvwozzqpykj"
+		},
+		{
+			"id": "ilwymrbztaruzml",
+			"title": "Idetavle for alle kunder!",
+			"body": "Vi ønsker oss en idetavle av noe slag der alle våre kunder kan komme med ideer til hva Ikomm skal gjøre bedre. Men vi har ikke råd til lisenser for alle sammen! Kan vi lage noe selv?",
+			"votes": 25,
+			"category": "kugvzqpzvzgvbox",
+			"status": "eenffnejigdtvbk"
+		}
+	]
+}

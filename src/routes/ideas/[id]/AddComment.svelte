@@ -7,6 +7,7 @@
 
 	let comment: string;
 	let loading = false;
+	let files: FileList | undefined;
 
 	export let idea: IdeasResponse;
 	export let respondingTo: CommentsResponse | null;
@@ -14,19 +15,28 @@
 	async function addComment() {
 		loading = true;
 
-		if ($user == null) {
-			throw new Error('Not logged in');
-		}
-
 		try {
-			await pb.collection('comments').create({
-				body: comment,
-				idea: idea.id,
-				created_by: $user.id,
-				responding_to: respondingTo?.id
-			});
+			if ($user == null) {
+				throw new Error('Not logged in');
+			}
+
+			const fd = new FormData();
+			fd.append('body', comment);
+			fd.append('idea', idea.id);
+			fd.append('created_by', $user.id);
+			if (respondingTo) {
+				fd.append('responding_to', respondingTo.id);
+			}
+			if (files) {
+				for (let file of files) {
+					fd.append('attachments', file);
+				}
+			}
+
+			await pb.collection('comments').create(fd);
 
 			comment = '';
+			files = undefined;
 			toast.success();
 		} catch (e) {
 			toast.error(unboxError(e).message);
@@ -51,6 +61,7 @@
 		placeholder="Add a comment"
 		class="min-h-40 w-full mt-2 p-2 rounded-md border-2 border-light-300 bg-light-200"
 	/>
+	<input class="mt-2" type="file" bind:files multiple={true} />
 	<div class="flex justify-end mt-2">
 		<Button
 			icon={Send}

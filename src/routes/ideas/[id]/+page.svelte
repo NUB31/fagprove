@@ -12,6 +12,7 @@
 	import type { PageData } from './$types';
 	import Button from '$lib/components/button/Button.svelte';
 	import { vote } from '$lib/util/vote';
+	import type { ExpandedIdea } from './types';
 
 	export let data: PageData;
 
@@ -26,6 +27,7 @@
 						goto(Routes.ideas);
 						break;
 					case 'update':
+						data.idea = { ...data.idea, ...sub.record } as ExpandedIdea;
 						toast.info('An edit was made to the idea, the content has been updated');
 						break;
 					default:

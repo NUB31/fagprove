@@ -3,9 +3,11 @@
 	import Respond from '~icons/ic/round-forum';
 	import Copy from '~icons/ic/round-content-copy';
 	import Button from '$lib/components/button/Button.svelte';
-	import { user } from '$lib/pocketbase/pb';
+	import { pb, user } from '$lib/pocketbase/pb';
 	import type { CommentsResponse } from '$lib/pocketbase/generated/pocketbase-types';
 	import type { ExpandedComment } from './types';
+	import ButtonLink from '$lib/components/link/ButtonLink.svelte';
+	import File from '~icons/ic/round-image';
 
 	export let comment: ExpandedComment;
 	export let onRespondClick: (comment: CommentsResponse) => void;
@@ -53,22 +55,44 @@
 		</div>
 
 		<div
-			class="absolute hidden bottom-0 translate-y-[110%] group-hover:flex p-2 bg-dark-200 border-dark-400 rounded-md gap-2 z-10"
-			class:left-0={!sentByMe}
-			class:right-0={sentByMe}
+			class={`pb-2 absolute opacity-0 top-0 -translate-y-full group-hover:opacity-100 transition-opacity ${sentByMe ? 'right-0' : 'left-0'}`}
 		>
-			<Button
-				class="p-0 bg-transparent border-none hover:bg-transparent ml-auto text-light-50"
-				icon={Respond}
-				on:click={() => onRespondClick(comment)}
-			/>
-			<Button
-				class="p-0 bg-transparent border-none hover:bg-transparent ml-auto text-light-50"
-				icon={Copy}
-				on:click={() => navigator.clipboard.writeText(comment.body)}
-			/>
+			<div
+				class="p-2 bg-dark-200 border-dark-400 rounded-md gap-2 z-10 flex"
+				class:left-0={!sentByMe}
+				class:right-0={sentByMe}
+			>
+				<Button
+					class="p-0 bg-transparent border-none hover:bg-transparent ml-auto text-light-50"
+					icon={Respond}
+					on:click={() => onRespondClick(comment)}
+				/>
+				<Button
+					class="p-0 bg-transparent border-none hover:bg-transparent ml-auto text-light-50"
+					icon={Copy}
+					on:click={() => navigator.clipboard.writeText(comment.body)}
+				/>
+			</div>
 		</div>
 	</div>
+
+	{#if comment.attachments.length >= 1}
+		<ul class={`flex gap-1 pt-1 ${sentByMe ? 'justify-end' : 'justify-start'}`}>
+			{#each comment.attachments as attachment}
+				<li class="mb-2">
+					<ButtonLink
+						class="truncate py-2 p-1 after:hidden"
+						title={attachment}
+						target="_blank"
+						href={pb.files.getUrl(comment, attachment)}
+						download={attachment}
+					>
+						<File />
+					</ButtonLink>
+				</li>
+			{/each}
+		</ul>
+	{/if}
 
 	<div class="text-dark-500">
 		{new Date(comment.created).toDateString()}

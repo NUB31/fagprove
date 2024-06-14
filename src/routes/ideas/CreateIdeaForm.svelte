@@ -9,6 +9,7 @@
 	let title: string;
 	let description: string;
 	let loading = false;
+	let files: FileList | undefined;
 
 	async function createIdea() {
 		loading = true;
@@ -18,11 +19,19 @@
 				throw new Error('Not logged in');
 			}
 
-			await pb.collection('ideas').create({
-				title: title,
-				description: description,
-				created_by: $user.id
-			});
+			const fd = new FormData();
+			fd.append('title', title);
+			fd.append('description', description);
+			fd.append('description', description);
+			fd.append('created_by', $user.id);
+
+			if (files) {
+				for (let file of files) {
+					fd.append('attachments', file);
+				}
+			}
+
+			await pb.collection('ideas').create(fd);
 			toast.success();
 			onSuccess();
 		} catch (e) {
@@ -52,5 +61,9 @@
 		placeholder="Description"
 		type="text"
 	/>
+	<label>
+		<div>Attachments</div>
+		<input bind:files class="mb-4" multiple={true} type="file" />
+	</label>
 	<Button {loading} class="w-full">Create idea</Button>
 </form>

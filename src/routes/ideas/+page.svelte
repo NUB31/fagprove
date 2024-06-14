@@ -136,13 +136,11 @@
 										By {idea.expand.created_by.username}
 									</div>
 								{/if}
-								{#if idea.expand?.status}
-									<div
-										class="text-sm px-2 text-black rounded-md border-2 bg-green-500 border-green-700"
-									>
-										Status: {idea.expand.status.name}
-									</div>
-								{/if}
+								<div
+									class="text-sm px-2 text-black rounded-md border-2 bg-green-500 border-green-700"
+								>
+									Status: {idea.expand?.status?.name || 'New'}
+								</div>
 							</div>
 						</svelte:fragment>
 

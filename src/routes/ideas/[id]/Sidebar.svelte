@@ -7,16 +7,14 @@
 </script>
 
 <div class="flex flex-col gap-4">
-	{#if idea.expand?.status}
-		<div>
-			<h4>Status</h4>
-			<div
-				class="w-full py-1 text-center bg-green-500 rounded-md text-black border-2 border-green-700"
-			>
-				{idea.expand?.status.name}
-			</div>
+	<div>
+		<h4>Status</h4>
+		<div
+			class="w-full py-1 text-center bg-green-500 rounded-md text-black border-2 border-green-700"
+		>
+			{idea.expand?.status?.name ?? 'New'}
 		</div>
-	{/if}
+	</div>
 
 	{#if idea.expand?.category}
 		<div>
@@ -49,7 +47,7 @@
 		<h4>Attachments</h4>
 		<ul>
 			{#each idea.attachments as attachment}
-				<li>
+				<li class="mb-2">
 					<ButtonLink
 						class="truncate py-2"
 						title={attachment}
