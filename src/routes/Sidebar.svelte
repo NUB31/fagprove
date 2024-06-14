@@ -6,6 +6,9 @@
 	import SidebarLink from './SidebarLink.svelte';
 	import Home from '~icons/ic/round-home';
 	import Idea from '~icons/ic/round-spoke';
+	import Admin from '~icons/ic/round-admin-panel-settings';
+	import Category from '~icons/ic/round-category';
+	import AuthorizedView from '$lib/components/authorizedView/AuthorizedView.svelte';
 
 	let sidebarOpen = browser ? document.body.clientWidth > 850 : true;
 </script>
@@ -26,9 +29,28 @@
 			<li>
 				<SidebarLink title="Home" expanded={sidebarOpen} href={Routes.home} icon={Home} />
 			</li>
-			<li>
-				<SidebarLink title="Ideas" expanded={sidebarOpen} href={Routes.ideas} icon={Idea} />
-			</li>
+			<AuthorizedView authDelegate={(u) => u.access_level >= 10}>
+				<li slot="authorized">
+					<SidebarLink title="Ideas" expanded={sidebarOpen} href={Routes.ideas} icon={Idea} />
+				</li>
+			</AuthorizedView>
+
+			<AuthorizedView authDelegate={(u) => u.access_level >= 20}>
+				<li slot="authorized">
+					<SidebarLink
+						title="Categories"
+						expanded={sidebarOpen}
+						href={Routes.categories}
+						icon={Category}
+					/>
+				</li>
+			</AuthorizedView>
+
+			<AuthorizedView authDelegate={(u) => u.access_level >= 30}>
+				<li slot="authorized">
+					<SidebarLink title="Admin" expanded={sidebarOpen} href={Routes.admin} icon={Admin} />
+				</li>
+			</AuthorizedView>
 		</ul>
 	</nav>
 	<div>

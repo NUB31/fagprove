@@ -42,7 +42,6 @@
 
 	$: {
 		filter = createFilter(statusFilter, categoryFilter, search, creator);
-		console.log(filter);
 	}
 </script>
 
