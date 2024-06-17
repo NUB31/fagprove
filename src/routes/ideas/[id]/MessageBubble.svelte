@@ -8,6 +8,7 @@
 	import type { ExpandedComment } from './types';
 	import ButtonLink from '$lib/components/link/ButtonLink.svelte';
 	import File from '~icons/ic/round-image';
+	import { sanitize } from 'isomorphic-dompurify';
 
 	export let comment: ExpandedComment;
 	export let onRespondClick: (comment: CommentsResponse) => void;
@@ -35,7 +36,7 @@
 					class:text-dark-50={!sentByMe}
 					class="line-clamp-1 max-w-96"
 				>
-					{@html comment.expand.responding_to.body}
+					{@html sanitize(comment.expand.responding_to.body)}
 				</div>
 			</div>
 		{/if}
@@ -51,7 +52,7 @@
 		{/if}
 
 		<div>
-			{@html comment.body}
+			{@html sanitize(comment.body)}
 		</div>
 
 		<div

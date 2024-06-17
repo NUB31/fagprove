@@ -42,7 +42,7 @@
 					<td>{category.name}</td>
 					<td class="w-44">
 						<Button
-							class="w-full justify-center"
+							class="w-full"
 							icon={Assignment}
 							on:click={() => {
 								currentCategoryId = category.id;

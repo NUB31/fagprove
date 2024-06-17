@@ -13,6 +13,7 @@
 	import Descending from '~icons/ic/round-keyboard-arrow-down';
 	import Ascending from '~icons/ic/round-keyboard-arrow-up';
 	import { onDestroy, onMount } from 'svelte';
+	import { sanitize } from 'isomorphic-dompurify';
 
 	let showCreateIdeaModal: () => void;
 	let closeCreateIdeaModal: () => void;
@@ -148,7 +149,7 @@
 							{new Date(idea.created).toDateString()}
 						</div>
 						<div class="line-clamp-2 lg:line-clamp-3">
-							{@html idea.description}
+							{@html sanitize(idea.description)}
 						</div>
 					</Card>
 				</a>

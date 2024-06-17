@@ -13,6 +13,7 @@
 	import Button from '$lib/components/button/Button.svelte';
 	import { vote } from '$lib/util/vote';
 	import type { ExpandedIdea } from './types';
+	import { sanitize } from 'isomorphic-dompurify';
 
 	export let data: PageData;
 
@@ -48,7 +49,7 @@
 	</svelte:fragment>
 
 	<Card title="Description">
-		{@html data.idea.description}
+		{@html sanitize(data.idea.description)}
 	</Card>
 
 	<CommentSection idea={data.idea} />

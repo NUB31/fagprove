@@ -4,6 +4,7 @@
 	import { toast } from '$lib/components/toast/toast';
 	import { pb, unboxError, user } from '$lib/pocketbase/pb';
 	import type { CommentsResponse, IdeasResponse } from '$lib/pocketbase/generated/pocketbase-types';
+	import { sanitize } from 'isomorphic-dompurify';
 
 	let comment: string;
 	let loading = false;
@@ -52,7 +53,7 @@
 		<button on:click={() => (respondingTo = null)} class="text-dark-500 text-left">
 			Responding to:
 			<div class="italic hover:line-through max-w-96 truncate">
-				{@html respondingTo.body}
+				{@html sanitize(respondingTo.body)}
 			</div>
 		</button>
 	{/if}

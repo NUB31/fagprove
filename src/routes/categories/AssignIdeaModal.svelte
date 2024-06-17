@@ -38,7 +38,7 @@
 	});
 </script>
 
-<table>
+<table class="w-96">
 	<thead>
 		<tr>
 			<th> Name </th>
@@ -50,7 +50,9 @@
 			<tr>
 				<td>{idea.title}</td>
 				<td>
-					<Button {loading} on:click={async () => await assignIdea(idea.id)}>Assign</Button>
+					<Button class="w-full" {loading} on:click={async () => await assignIdea(idea.id)}>
+						Assign
+					</Button>
 				</td>
 			</tr>
 		{/each}
