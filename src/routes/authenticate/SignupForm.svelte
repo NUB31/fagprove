@@ -25,7 +25,7 @@
 				passwordConfirm: passwordConfirm
 			});
 			await pb.collection('users').authWithPassword(email, password);
-			await goto(Routes.home);
+			await goto(Routes.root);
 			toast.success();
 		} catch (e) {
 			toast.error(unboxError(e).message);

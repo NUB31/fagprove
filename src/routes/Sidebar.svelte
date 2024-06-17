@@ -14,21 +14,13 @@
 </script>
 
 <aside
-	class={`sidebar relative z-10 flex flex-col gap-4 bg-light-50 pb-2 transition-all ${
+	class={`sidebar relative z-10 flex flex-col gap-4 bg-light-50 pb-2 transition-all w-[var(--sidebar-width)] ${
 		sidebarOpen ? 'px-4' : 'items-center px-2'
 	}`}
-	style={`${!sidebarOpen ? '--sidebar-width: 4rem' : ''}`}
+	style={`${!sidebarOpen ? '--sidebar-width: 4rem;' : ''}`}
 >
-	<header style="width: var(--sidebar-width);" class:hidden={!sidebarOpen}>
-		<a href={Routes.home}>
-			<img src="https://placehold.co/600x300" alt="logo" />
-		</a>
-	</header>
 	<nav class="flex-1 overflow-auto">
 		<ul class="flex flex-col gap-2">
-			<li>
-				<SidebarLink title="Home" expanded={sidebarOpen} href={Routes.home} icon={Home} />
-			</li>
 			<AuthorizedView authDelegate={(u) => u.access_level >= 10}>
 				<li slot="authorized">
 					<SidebarLink title="Ideas" expanded={sidebarOpen} href={Routes.ideas} icon={Idea} />

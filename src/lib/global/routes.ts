@@ -1,6 +1,5 @@
 export class Routes {
 	static root = '/';
-	static home = '/';
 	static authenticate = '/authenticate';
 
 	static user = (id: string) => `/user/${id}`;

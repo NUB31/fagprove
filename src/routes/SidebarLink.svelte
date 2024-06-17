@@ -10,6 +10,7 @@
 
 <ButtonLink
 	match
+	{title}
 	class={`flex items-center ${expanded ? 'justify-start rounded-lg bg-light-200 border-light-300 hover:bg-light-300 hover:border-light-400' : 'justify-center bg-transparent border-none rounded-full aspect-square p-2 hover:bg-light-200'}`}
 	{href}
 >

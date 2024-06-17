@@ -15,7 +15,7 @@
 
 		try {
 			await pb.collection('users').authWithPassword(email, password);
-			await goto(Routes.home);
+			await goto(Routes.root);
 		} catch (e) {
 			toast.error(unboxError(e).message);
 		} finally {
