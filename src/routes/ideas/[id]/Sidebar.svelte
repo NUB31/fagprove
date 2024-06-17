@@ -5,6 +5,8 @@
 	import { toast } from '$lib/components/toast/toast';
 	import { pb, unboxError } from '$lib/pocketbase/pb';
 	import type { ExpandedIdea } from './types';
+	import Edit from '~icons/ic/round-edit';
+	import Cancel from '~icons/ic/round-cancel';
 
 	export let idea: ExpandedIdea;
 	let editing = false;
@@ -35,7 +37,9 @@
 <div class="flex flex-col gap-4">
 	<AuthorizedView authDelegate={(u) => u.access_level >= 20}>
 		<svelte:fragment slot="authorized">
-			<Button on:click={() => (editing = !editing)}>Toggle editing</Button>
+			<Button on:click={() => (editing = !editing)} icon={editing ? Cancel : Edit}>
+				{editing ? 'Stop editing' : 'Edit'}
+			</Button>
 		</svelte:fragment>
 	</AuthorizedView>
 

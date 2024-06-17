@@ -14,6 +14,7 @@
 	import { vote } from '$lib/util/vote';
 	import type { ExpandedIdea } from './types';
 	import { sanitize } from 'isomorphic-dompurify';
+	import AuthorizedView from '$lib/components/authorizedView/AuthorizedView.svelte';
 
 	export let data: PageData;
 
@@ -43,18 +44,22 @@
 	});
 </script>
 
-<DynamicPage title={`${data.idea.votes} votes - ${data.idea.title}`}>
-	<svelte:fragment slot="header">
-		<Button class="py-1" on:click={async () => await vote(data.idea.id)}>Add your vote</Button>
+<AuthorizedView showUnauthorizedMessage authDelegate={(u) => u.access_level >= 10}>
+	<svelte:fragment slot="authorized" let:user>
+		<DynamicPage title={`${data.idea.votes} votes - ${data.idea.title}`}>
+			<svelte:fragment slot="header">
+				<Button class="py-1" on:click={async () => await vote(data.idea.id)}>Add your vote</Button>
+			</svelte:fragment>
+
+			<Card title="Description">
+				{@html sanitize(data.idea.description)}
+			</Card>
+
+			<CommentSection idea={data.idea} {user} />
+
+			<svelte:fragment slot="sidebar">
+				<Sidebar idea={data.idea} />
+			</svelte:fragment>
+		</DynamicPage>
 	</svelte:fragment>
-
-	<Card title="Description">
-		{@html sanitize(data.idea.description)}
-	</Card>
-
-	<CommentSection idea={data.idea} />
-
-	<svelte:fragment slot="sidebar">
-		<Sidebar idea={data.idea} />
-	</svelte:fragment>
-</DynamicPage>
+</AuthorizedView>

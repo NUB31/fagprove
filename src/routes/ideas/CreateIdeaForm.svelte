@@ -1,11 +1,14 @@
 <script lang="ts">
+	import AuthorizedView from '$lib/components/authorizedView/AuthorizedView.svelte';
 	import Button from '$lib/components/button/Button.svelte';
 	import Quill from '$lib/components/editor/Quill.svelte';
 	import Input from '$lib/components/form/Input.svelte';
 	import { toast } from '$lib/components/toast/toast';
-	import { pb, unboxError, user } from '$lib/pocketbase/pb';
+	import type { UsersResponse } from '$lib/pocketbase/generated/pocketbase-types';
+	import { pb, unboxError } from '$lib/pocketbase/pb';
 
 	export let onSuccess: () => void = () => {};
+	export let user: UsersResponse;
 
 	let title: string;
 	let description: string;
@@ -16,15 +19,11 @@
 		loading = true;
 
 		try {
-			if ($user == null) {
-				throw new Error('Not logged in');
-			}
-
 			const fd = new FormData();
 			fd.append('title', title);
 			fd.append('description', description);
 			fd.append('description', description);
-			fd.append('created_by', $user.id);
+			fd.append('created_by', user.id);
 
 			if (files) {
 				for (let file of files) {
@@ -43,7 +42,7 @@
 	}
 </script>
 
-<form on:submit|preventDefault={createIdea}>
+<form on:submit|preventDefault={() => createIdea()}>
 	<caption>Create idea</caption>
 	<hr />
 	<Input

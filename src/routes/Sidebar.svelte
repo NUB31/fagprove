@@ -4,7 +4,6 @@
 	import ArrowLeft from '~icons/ic/round-arrow-left';
 	import ArrowRight from '~icons/ic/round-arrow-right';
 	import SidebarLink from './SidebarLink.svelte';
-	import Home from '~icons/ic/round-home';
 	import Idea from '~icons/ic/round-spoke';
 	import Admin from '~icons/ic/round-admin-panel-settings';
 	import Category from '~icons/ic/round-category';

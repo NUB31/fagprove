@@ -3,6 +3,7 @@
 	import { user } from '$lib/pocketbase/pb';
 
 	export let authDelegate: (user: UsersResponse) => boolean = (_) => true;
+	export let showUnauthorizedMessage = false;
 
 	let nonNullUser: UsersResponse;
 
@@ -13,6 +14,8 @@
 
 {#if $user != null && authDelegate($user)}
 	<slot name="authorized" user={nonNullUser} />
+{:else if showUnauthorizedMessage}
+	<div>You are not authorized to view this resource</div>
 {:else}
 	<slot name="unauthorized" />
 {/if}

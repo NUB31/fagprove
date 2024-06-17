@@ -1,8 +1,9 @@
 <script lang="ts">
+	import AuthorizedView from '$lib/components/authorizedView/AuthorizedView.svelte';
 	import Button from '$lib/components/button/Button.svelte';
 	import Modal from '$lib/components/modal/Modal.svelte';
-	import type { CategoryResponse } from '$lib/pocketbase/generated/pocketbase-types';
-	import { pb, unboxError, user } from '$lib/pocketbase/pb';
+	import type { CategoryResponse, UsersResponse } from '$lib/pocketbase/generated/pocketbase-types';
+	import { pb, unboxError } from '$lib/pocketbase/pb';
 	import AssignIdeaModal from './AssignIdeaModal.svelte';
 	import Assignment from '~icons/ic/round-assignment';
 
@@ -11,13 +12,9 @@
 
 	let currentCategoryId: string | null = null;
 
-	async function getMyCategories(): Promise<CategoryResponse[]> {
-		if (!$user) {
-			throw new Error('Not logged in');
-		}
-
+	async function getMyCategories(user: UsersResponse): Promise<CategoryResponse[]> {
 		return pb.collection('category').getFullList({
-			filter: pb.filter('owner.id = {:userId}', { userId: $user.id })
+			filter: pb.filter('owner.id = {:userId}', { userId: user.id })
 		});
 	}
 </script>
@@ -26,36 +23,40 @@
 	<AssignIdeaModal {currentCategoryId} onClose={closeAssignmentModal} />
 </Modal>
 
-{#await getMyCategories()}
-	Loading...
-{:then categories}
-	<table class="w-full">
-		<thead>
-			<tr>
-				<th> Name </th>
-				<th> Assignment </th>
-			</tr>
-		</thead>
-		<tbody>
-			{#each categories as category}
-				<tr>
-					<td>{category.name}</td>
-					<td class="w-44">
-						<Button
-							class="w-full"
-							icon={Assignment}
-							on:click={() => {
-								currentCategoryId = category.id;
-								showAssignmentModal();
-							}}
-						>
-							Assign ideas
-						</Button>
-					</td>
-				</tr>
-			{/each}
-		</tbody>
-	</table>
-{:catch e}
-	{unboxError(e).message}
-{/await}
+<AuthorizedView showUnauthorizedMessage authDelegate={(u) => u.access_level >= 20}>
+	<svelte:fragment slot="authorized" let:user>
+		{#await getMyCategories(user)}
+			Loading...
+		{:then categories}
+			<table class="w-full">
+				<thead>
+					<tr>
+						<th> Name </th>
+						<th> Assignment </th>
+					</tr>
+				</thead>
+				<tbody>
+					{#each categories as category}
+						<tr>
+							<td>{category.name}</td>
+							<td class="w-44">
+								<Button
+									class="w-full"
+									icon={Assignment}
+									on:click={() => {
+										currentCategoryId = category.id;
+										showAssignmentModal();
+									}}
+								>
+									Assign ideas
+								</Button>
+							</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		{:catch e}
+			{unboxError(e).message}
+		{/await}
+	</svelte:fragment>
+</AuthorizedView>

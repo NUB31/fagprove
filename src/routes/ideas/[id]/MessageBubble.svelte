@@ -3,20 +3,21 @@
 	import Respond from '~icons/ic/round-forum';
 	import Copy from '~icons/ic/round-content-copy';
 	import Button from '$lib/components/button/Button.svelte';
-	import { pb, user } from '$lib/pocketbase/pb';
-	import type { CommentsResponse } from '$lib/pocketbase/generated/pocketbase-types';
+	import { pb } from '$lib/pocketbase/pb';
+	import type { CommentsResponse, UsersResponse } from '$lib/pocketbase/generated/pocketbase-types';
 	import type { ExpandedComment } from './types';
 	import ButtonLink from '$lib/components/link/ButtonLink.svelte';
 	import File from '~icons/ic/round-image';
 	import { sanitize } from 'isomorphic-dompurify';
 
 	export let comment: ExpandedComment;
+	export let user: UsersResponse;
 	export let onRespondClick: (comment: CommentsResponse) => void;
 
 	let sentByMe = false;
 
 	$: {
-		sentByMe = $user != null && $user.id == comment.expand?.created_by?.id;
+		sentByMe = user != null && user.id == comment.expand?.created_by?.id;
 	}
 </script>
 

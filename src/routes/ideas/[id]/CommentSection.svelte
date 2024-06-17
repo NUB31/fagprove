@@ -1,12 +1,17 @@
 <script lang="ts">
 	import MessageBubble from './MessageBubble.svelte';
-	import type { CommentsResponse, IdeasResponse } from '$lib/pocketbase/generated/pocketbase-types';
+	import type {
+		CommentsResponse,
+		IdeasResponse,
+		UsersResponse
+	} from '$lib/pocketbase/generated/pocketbase-types';
 	import { pb } from '$lib/pocketbase/pb';
 	import AddComment from './AddComment.svelte';
 	import type { ExpandedComment } from './types';
 	import { onDestroy, onMount } from 'svelte';
 
 	export let idea: IdeasResponse;
+	export let user: UsersResponse;
 
 	let respondingTo: CommentsResponse | null = null;
 	let comments: ExpandedComment[] = [];
@@ -61,6 +66,7 @@
 	{#each comments as comment}
 		<li class="flex flex-col">
 			<MessageBubble
+				{user}
 				{comment}
 				onRespondClick={(v) => {
 					respondingTo = v;

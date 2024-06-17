@@ -1,8 +1,10 @@
 <script lang="ts">
 	import Input from '$lib/components/form/Input.svelte';
-	import { pb, user } from '$lib/pocketbase/pb';
+	import type { UsersResponse } from '$lib/pocketbase/generated/pocketbase-types';
+	import { pb } from '$lib/pocketbase/pb';
 
-	export let filter;
+	export let filter: string;
+	export let user: UsersResponse;
 
 	let statusFilter: string[] = [];
 	let categoryFilter: string[] = [];
@@ -30,8 +32,8 @@
 			filter.push(pb.filter('title ~ {:search} || description ~ {:search}', { search: search }));
 		}
 
-		if (creator == 'you' && $user) {
-			filter.push(pb.filter('created_by.id = {:user}', { user: $user.id }));
+		if (creator == 'you' && user) {
+			filter.push(pb.filter('created_by.id = {:user}', { user: user.id }));
 		}
 
 		return filter
