@@ -3,5 +3,5 @@
 </script>
 
 <AuthorizedView showUnauthorizedMessage authDelegate={(u) => u.access_level >= 30}>
-	Not implemented yet
+	<div slot="authorized">Not implemented yet</div>
 </AuthorizedView>
