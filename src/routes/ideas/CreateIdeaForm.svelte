@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/button/Button.svelte';
+	import Quill from '$lib/components/editor/Quill.svelte';
 	import Input from '$lib/components/form/Input.svelte';
 	import { toast } from '$lib/components/toast/toast';
 	import { pb, unboxError, user } from '$lib/pocketbase/pb';
@@ -53,14 +54,8 @@
 		placeholder="Title"
 		type="text"
 	/>
-	<Input
-		required
-		class="bg-light-200"
-		bind:value={description}
-		label="Description"
-		placeholder="Description"
-		type="text"
-	/>
+	<Quill class="mb-2" bind:html={description} />
+
 	<label>
 		<div>Attachments</div>
 		<input bind:files class="mb-4" multiple={true} type="file" />

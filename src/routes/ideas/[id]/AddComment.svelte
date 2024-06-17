@@ -5,6 +5,7 @@
 	import { pb, unboxError, user } from '$lib/pocketbase/pb';
 	import type { CommentsResponse, IdeasResponse } from '$lib/pocketbase/generated/pocketbase-types';
 	import { sanitize } from 'isomorphic-dompurify';
+	import Quill from '$lib/components/editor/Quill.svelte';
 
 	let comment: string;
 	let loading = false;
@@ -57,11 +58,7 @@
 			</div>
 		</button>
 	{/if}
-	<textarea
-		bind:value={comment}
-		placeholder="Add a comment"
-		class="min-h-40 w-full mt-2 p-2 rounded-md border-2 border-light-300 bg-light-200"
-	/>
+	<Quill bind:html={comment} placeholder="Add a comment" />
 	<input class="mt-2" type="file" bind:files multiple={true} />
 	<div class="flex justify-end mt-2">
 		<Button
