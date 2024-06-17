@@ -4,6 +4,7 @@
 	import type { CategoryResponse } from '$lib/pocketbase/generated/pocketbase-types';
 	import { pb, unboxError, user } from '$lib/pocketbase/pb';
 	import AssignIdeaModal from './AssignIdeaModal.svelte';
+	import Assignment from '~icons/ic/round-assignment';
 
 	let showAssignmentModal: () => void;
 	let closeAssignmentModal: () => void;
@@ -28,7 +29,7 @@
 {#await getMyCategories()}
 	Loading...
 {:then categories}
-	<table>
+	<table class="w-full">
 		<thead>
 			<tr>
 				<th> Name </th>
@@ -39,8 +40,10 @@
 			{#each categories as category}
 				<tr>
 					<td>{category.name}</td>
-					<td>
+					<td class="w-44">
 						<Button
+							class="w-full justify-center"
+							icon={Assignment}
 							on:click={() => {
 								currentCategoryId = category.id;
 								showAssignmentModal();
