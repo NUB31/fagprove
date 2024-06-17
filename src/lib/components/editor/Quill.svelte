@@ -3,7 +3,6 @@
 	import type Quill from 'quill';
 	import { twMerge } from 'tailwind-merge';
 
-	export let placeholder: string = '';
 	export let text: string = '';
 	export let html: string;
 
@@ -17,8 +16,7 @@
 			modules: {
 				toolbar: '#toolbar'
 			},
-			theme: 'snow',
-			placeholder: placeholder
+			theme: 'snow'
 		});
 
 		quill.setText(html);
@@ -32,7 +30,7 @@
 
 <div
 	{...$$restProps}
-	class={twMerge('rounded-md overflow-hidden border-2 border-dark-200', $$restProps['class'])}
+	class={twMerge('rounded-md overflow-hidden border-2 border-light-200', $$restProps['class'])}
 >
 	<div id="toolbar">
 		<select class="ql-font" />
@@ -73,8 +71,37 @@
 	@import 'https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css';
 
 	:global(.ql-editor, .ql-toolbar) {
-		background-color: white;
-		color: black;
+		background-color: var(--clr-light-200);
+		color: var(--clr-dark-50);
+	}
+
+	:global(.ql-toolbar) {
+		border: none !important;
+		border-bottom: 2px solid var(--clr-light-100) !important;
+	}
+
+	:global(.ql-stroke) {
+		stroke: var(--clr-light-900) !important;
+	}
+
+	:global(.ql-fill) {
+		fill: var(--clr-light-900) !important;
+	}
+
+	:global(.ql-active .ql-stroke) {
+		stroke: var(--clr-light-600) !important;
+	}
+
+	:global(.ql-active .ql-fill) {
+		fill: var(--clr-light-600) !important;
+	}
+
+	:global(.ql-picker-label) {
+		color: var(--clr-light-900) !important;
+	}
+
+	:global(.ql-container) {
+		border: none !important;
 	}
 
 	:global(.ql-editor) {
