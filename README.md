@@ -1,38 +1,22 @@
-# create-svelte
+# Assumes you have git and docker installed
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+# Install node
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+# A terminal restart might be required
+nvm install --lts
 
-## Creating a project
+# Clone repository
+git clone git@github.com:nub31/fagprove
+cd fagprove
 
-If you're seeing this, you've probably already done this step. Congrats!
+# Start development environment with docker
+docker compose -f compose/dev.yml up -d
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+# Copy environment variables to .env file
+cp .env.example .env
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+# Install dependencies
+npm install
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
+# Start development server
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
